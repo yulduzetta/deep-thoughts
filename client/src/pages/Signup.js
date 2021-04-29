@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useMutation } from "@apollo/react-hooks";
 import { ADD_USER } from "../utils/mutations";
+import Auth from "../utils/auth";
 
 const Signup = () => {
   const [formState, setFormState] = useState({
@@ -45,6 +46,7 @@ const Signup = () => {
       const { data } = await addUser({
         variables: { ...formState },
       });
+      Auth.login(data.addUser.token);
       console.log(data);
     } catch (e) {
       console.log(e);
