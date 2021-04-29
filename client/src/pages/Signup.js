@@ -16,6 +16,8 @@ const Signup = () => {
   // and returns it to us. In our case, it returns in the form of the addUser function that's returned.
   // We also get the ability to check for errors.
 
+  //  If we need to do it immediately, we can implement it with the useEffect() Hook
+
   // What's the term used for executing a function that scopes data
   // to a new function and returns it to run at a later time? -- A closure.
   const [addUser, { error }] = useMutation(ADD_USER);
