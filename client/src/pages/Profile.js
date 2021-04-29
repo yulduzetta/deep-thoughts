@@ -15,8 +15,9 @@ import { Redirect, useParams } from "react-router-dom";
 
 import ThoughtList from "../components/ThoughtList";
 import FriendList from "../components/FriendList";
+import { ADD_FRIEND } from "../utils/mutations";
 
-import { useQuery } from "@apollo/react-hooks";
+import { useQuery, useMutation } from "@apollo/react-hooks";
 import { QUERY_USER, QUERY_ME } from "../utils/queries";
 import Auth from "../utils/auth";
 
@@ -37,6 +38,8 @@ const Profile = () => {
   // but if it runs QUERY_USER instead, the response will return with our data in the user property.
   // Now we have it set up to check for both.
   const user = data?.me || data?.user || {};
+
+  const [addFriend] = useMutation(ADD_FRIEND);
 
   // if the user is logged in and if so, if the username stored
   // in the JSON Web Token is the same as the userParam value.
@@ -59,6 +62,21 @@ const Profile = () => {
     );
   }
 
+  // In this case, the addFriend() mutation returns an updated user object
+  // whose ID matches the me object already stored in cache.
+  // When the cache is updated, the useQuery(QUERY_ME_BASIC) Hook on the homepage causes a re-render.
+  const handleClick = async () => {
+    try {
+      await addFriend({
+        variables: {
+          id: user._id,
+        },
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   return (
     <div>
       <div className="flex-row mb-3">
@@ -67,6 +85,15 @@ const Profile = () => {
           Otherwise, it will display the username of the other user on their profile. */}
           Viewing {userParam ? `${user.username}'s` : "your"} profile
         </h2>
+
+        {/* With these changes, the userParam variable is only defined 
+        when the route includes a username (e.g., /profile/Marisa86). 
+        Thus, the button won't display when the route is simply /profile. */}
+        {userParam && (
+          <button className="btn ml-auto" onClick={handleClick}>
+            Add Friend
+          </button>
+        )}
       </div>
 
       <div className="flex-row justify-space-between mb-3">
