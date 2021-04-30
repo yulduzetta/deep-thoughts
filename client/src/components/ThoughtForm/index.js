@@ -24,6 +24,8 @@ const ThoughtForm = () => {
   // Remember, the addThought() function will run the actual mutation.
   // The error variable will initially be undefined
   // but can change depending on if the mutation failed.
+
+  // Adding or removing an item from an array would require updating the cache for that array.
   const [addThought, { error }] = useMutation(ADD_THOUGHT, {
     // In the update() function, addThought represents the new thought that was just created.
     // Using the cache object, we can read what's currently saved in the QUERY_THOUGHTS cache
