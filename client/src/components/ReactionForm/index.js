@@ -19,12 +19,13 @@ const ReactionForm = ({ thoughtId }) => {
   // Updating the cache works seamlessly, because the mutation returns the parent thought object that includes the updated reactions array as a property.
   // If the mutation returned the reaction object instead, then we'd have another situation in which the cache would need a manual update.
   const handleFormSubmit = async (event) => {
+    event.preventDefault();
+
     try {
       await addReaction({
         variables: { thoughtId, reactionBody },
       });
       // clean up
-      event.preventDefault();
       setBody("");
       setCharCount(0);
     } catch (e) {
