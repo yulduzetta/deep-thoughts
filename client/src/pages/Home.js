@@ -1,4 +1,5 @@
-import { useQuery } from "@apollo/client";
+import { useQuery } from "@apollo/react-hooks";
+
 import React from "react";
 
 import { QUERY_THOUGHTS, QUERY_ME_BASIC } from "../utils/queries";
