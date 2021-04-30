@@ -12,13 +12,15 @@
 // This means that the user will not be able to hit their browser's back button,
 // and return to the 404 route.
 import { Redirect, useParams } from "react-router-dom";
+import { useQuery, useMutation } from "@apollo/react-hooks";
 
 import ThoughtList from "../components/ThoughtList";
 import FriendList from "../components/FriendList";
-import { ADD_FRIEND } from "../utils/mutations";
+import ThoughtForm from "../components/ThoughtForm";
 
-import { useQuery, useMutation } from "@apollo/react-hooks";
+import { ADD_FRIEND } from "../utils/mutations";
 import { QUERY_USER, QUERY_ME } from "../utils/queries";
+
 import Auth from "../utils/auth";
 
 const Profile = () => {
@@ -112,6 +114,9 @@ const Profile = () => {
           />
         </div>
       </div>
+      {/* we'll use the userParam variable to make sure the form only displays 
+      on the user's own Profile page, not on other users' pages. */}
+      <div className="mb-3">{!userParam && <ThoughtForm />}</div>
     </div>
   );
 };

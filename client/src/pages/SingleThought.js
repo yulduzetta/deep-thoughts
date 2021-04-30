@@ -4,9 +4,11 @@ import { useQuery } from "@apollo/react-hooks";
 import { QUERY_THOUGHT } from "../utils/queries";
 import ReactionList from "../components/ReactionList";
 
+import Auth from "../utils/auth";
+import ReactionForm from "../components/ReactionForm";
+
 const SingleThought = (props) => {
   const { id: thoughtId } = useParams();
-  console.log(thoughtId);
 
   const { loading, data } = useQuery(QUERY_THOUGHT, {
     variables: { id: thoughtId },
@@ -31,9 +33,10 @@ const SingleThought = (props) => {
           <p>{thought.thoughtText}</p>
         </div>
       </div>
-      {thought.reactionCount > 0 && (
-        <ReactionList reactions={thought.reactions}/> || console.log('NO REACTIONS')
-      )}
+      {thought.reactionCount > 0 &&
+        (<ReactionList reactions={thought.reactions} /> ||
+          console.log("NO REACTIONS"))}
+      {Auth.loggedIn && <ReactionForm thoughtId={thoughtId}/>}
     </div>
   );
 };
