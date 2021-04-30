@@ -30,7 +30,7 @@ const ThoughtForm = () => {
     // and then update it with writeQuery() to include the new thought object.
     update(cache, { data: { addThought } }) {
       // read what's currently in the cache
-      const { thoughts } = cache.read({ query: QUERY_THOUGHTS });
+      const { thoughts } = cache.readQuery({ query: QUERY_THOUGHTS });
 
       // prepend the newest thouhght to the front of the array
       cache.writeQuery({
